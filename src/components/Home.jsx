@@ -1,65 +1,60 @@
-// import { useState } from "react";
+// export default function Home({ age }) {
+//   return age > 18 && <h2>Welcome</h2>;
+// }
 
-// export default function Home() {
-//   const [score, setScore] = useState(0);
-//   const [wickets, setWickets] = useState(0); 
+// export default function Home({ age }) {
+//   return age > 18 ? <h2>Welcome</h2> : <h2>Not allowed</h2>;
+// }
 
-//   const Runs = () => {
-//     setScore(score + 1);
+// export default function Home({ age }) {
+//   if (age > 18) return <h2>Welcome</h2>;
+//   else return <h2>Not allowed</h2>;
+// }
+
+// export default function Home({ age }) {
+//   const handleClick = () => {
+//     alert("Hello");
 //   };
-
-//   const handleWicket = () => { 
-//     if (wickets < 10) {
-//       setWickets(wickets + 1);
-//     }
+//   const handleSubmit = (name) => {
+//     alert(`Hello ${name}`);
 //   };
-
 //   return (
 //     <>
-//       <p>Score: {score}</p>
-//       <p>Wickets: {wickets}</p>
-//       <button onClick={Runs}>Run</button>
-//       <button onClick={handleWicket}>Wicket</button>
+//       <h2>Hello World</h2>
+//       <button onClick={handleClick}>Click</button>
+//       <button onClick={() => handleSubmit("John")}>Submit</button>
 //     </>
 //   );
-// 
-
+// }
 
 import { useState } from "react";
-
 export default function Home() {
-  const [score, setScore] = useState(0);
-  const [wickets, setWickets] = useState(0);
-
-  const handleRun = () => {
-    setScore(score + 1);
+  const [wicket, setWicket] = useState(0);
+  const [run, setRun] = useState(0);
+  const [message, setMessage] = useState();
+  const incrementRun = () => {
+    if (wicket < 10) {
+      setRun(run + 1);
+      setMessage("Well Done");
+    }
   };
-
-  const handleWicket = () => {
-    if (wickets < 10) {
-      setWickets(wickets + 1);
+  const incrementWicket = () => {
+    if (wicket < 10) {
+      setWicket(wicket + 1);
+      setMessage("Better Luck Next Time");
+    } else {
+      setMessage("Game Over");
     }
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-
-      <div>
-        <button onClick={handleRun}>Run</button>
-
-        <p>Score: {score}</p>
-        <p>Wickets: {wickets}</p>
-
-        <button onClick={handleWicket}>Wicket</button>
-      </div>
-
-      <div>
-        {wickets === 10 && (
-          <h2 style={{ color: "green" }}>WELL DONE</h2>
-        )}
-      </div>
-    </div>
+    <>
+      <button onClick={incrementRun}>Run</button>
+      <h3>{run}</h3>
+      <button onClick={incrementWicket}>Wicket</button>
+      <h3>{wicket}</h3>
+      <hr />
+      {message}
+    </>
   );
 }
-
-
