@@ -18,6 +18,12 @@ export default function Cart() {
       product._id === id ? { ...product, qty: qty + 1 } : product
     );
     setCart(updatedCart);
+    // Add bounce animation to the cart icon
+    const cartIcon = document.querySelector('.nav-link[href="/cart"]');
+    if (cartIcon) {
+      cartIcon.classList.add('bounce');
+      setTimeout(() => cartIcon.classList.remove('bounce'), 1000);
+    }
   };
 
   const decrement = (id, qty) => {
@@ -63,7 +69,11 @@ export default function Cart() {
       };
 
       const url = `${API_URL}/api/orders`;
-      const result = await axios.post(url, orderData);
+      const result = await axios.post(url, orderData, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      });
       
       setOrderMessage("Order placed successfully! Redirecting to orders...");
       setCart([]); // Clear cart

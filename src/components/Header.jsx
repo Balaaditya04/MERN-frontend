@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 
 export default function Header() {
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser, cart } = useContext(AppContext);
 
   const handleLogout = () => {
     setUser({});
@@ -23,7 +23,7 @@ export default function Header() {
             🏠 Home
           </Link>
           <Link to="/cart" className="nav-link">
-            🛒 Cart
+            🛒 Cart {cart.length > 0 && <span className="badge badge-primary pulse">{cart.length}</span>}
           </Link>
           <Link to="/order" className="nav-link">
             📦 Orders

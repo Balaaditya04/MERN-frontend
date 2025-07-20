@@ -16,7 +16,7 @@ export default function Home() {
     try {
       setIsLoading(true);
       setError("");
-      const url = `${API_URL}/api/products/?page=1&limit=8&search=`;
+      const url = `${API_URL}/api/products/all?page=1&limit=8`;
       const result = await axios.get(url);
       setProducts(result.data.products || []);
     } catch (err) {
@@ -95,11 +95,11 @@ export default function Home() {
             </div>
           )}
           {!isLoading && !error && products.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="product-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {products.map((product) => (
                 <div
                   key={product._id}
-                  className="card p-2 shadow hover:shadow-lg transition-all duration-200 flex flex-col items-center bg-white border border-gray-100 rounded-lg"
+                  className="product-card card p-2 shadow hover:shadow-lg transition-all duration-200 flex flex-col items-center bg-white border border-gray-100 rounded-lg"
                   style={{ minWidth: 0 }}
                 >
                   <img
