@@ -1,20 +1,2 @@
-.App-Register-Row {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-}
-
-.App-Register-Row input {
-    padding: 5px;
-    margin: 5px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.App-Register-Row button {
-    padding: 5px;
-    margin: 5px;
-    width: 100%;
-}
+/* Register component now uses the new CSS system */
+/* Old styles removed - using App.css utility classes instead */
