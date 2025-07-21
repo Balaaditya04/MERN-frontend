@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 import axios from "axios";
+import Card from "./ui/Card";
+import Button from "./ui/Button";
 
 export default function Home() {
   const { cart, setCart, user } = useContext(AppContext);
@@ -59,156 +61,124 @@ export default function Home() {
     <div className="page-container">
       <div className="container">
         {/* Hero Section */}
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
-            Welcome to <span className="text-primary">MERN Store</span>
+        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+          <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "var(--color-text)", marginBottom: "1rem" }}>
+            Welcome to <span style={{ color: "var(--color-accent)" }}>MERN Store</span>
           </h1>
-          <div className="flex justify-center gap-4">
-            <a href="#products" className="btn btn-primary btn-sm md:btn-lg">
+          <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
+            <Button onClick={() => document.getElementById('products').scrollIntoView({ behavior: 'smooth' })}>
               Shop Now
-            </a>
-            <a href="/cart" className="btn btn-secondary btn-sm md:btn-lg">
-              View Cart ({cart.length})
-            </a>
+            </Button>
+            <Button variant="secondary" onClick={() => navigate("/cart")}>View Cart ({cart.length})</Button>
           </div>
         </div>
 
         {/* Featured Products */}
-        <div id="products" className="mb-10">
-          <h2 className="text-2xl font-bold text-center mb-6">Featured Products</h2>
+        <div id="products" style={{ marginBottom: "2rem" }}>
+          <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", textAlign: "center", marginBottom: "1.5rem" }}>Featured Products</h2>
           {isLoading && (
-            <div className="text-center py-8">
-              <div className="spinner mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading products...</p>
+            <div style={{ textAlign: "center", padding: "2rem 0" }}>
+              <div className="spinner" style={{ margin: "0 auto 1rem" }}></div>
+              <p style={{ color: "#666" }}>Loading products...</p>
             </div>
           )}
           {error && (
-            <div className="alert alert-error mb-6">
-              {error}
-            </div>
+            <div style={{ color: "var(--color-error)", textAlign: "center", marginBottom: "1.5rem" }}>{error}</div>
           )}
           {!isLoading && !error && products.length === 0 && (
-            <div className="text-center py-8">
-              <div className="text-4xl mb-4">📦</div>
-              <h3 className="text-lg font-semibold mb-2">No Products Available</h3>
-              <p className="text-gray-600">Check back later for new products!</p>
+            <div style={{ textAlign: "center", padding: "2rem 0" }}>
+              <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>📦</div>
+              <h3 style={{ fontSize: "1rem", fontWeight: "bold", marginBottom: "0.5rem" }}>No Products Available</h3>
+              <p style={{ color: "#666" }}>Check back later for new products!</p>
             </div>
           )}
           {!isLoading && !error && products.length > 0 && (
-            <div className="product-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
               {products.map((product) => (
-                <div
-                  key={product._id}
-                  className="product-card card p-2 shadow hover:shadow-lg transition-all duration-200 flex flex-col items-center bg-white border border-gray-100 rounded-lg"
-                  style={{ minWidth: 0 }}
-                >
+                <Card key={product._id} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                   <img
                     src={product.imgUrl || "https://via.placeholder.com/160x120?text=No+Image"}
                     alt={product.productName}
-                    className="w-32 h-24 object-cover rounded-md mb-2 border"
-                    style={{ maxWidth: "100%", maxHeight: "96px" }}
+                    style={{ width: "128px", height: "96px", objectFit: "cover", borderRadius: "6px", marginBottom: "0.5rem", border: "1px solid var(--color-border)" }}
                     onError={e => {
                       e.target.src = "https://via.placeholder.com/160x120?text=No+Image";
                     }}
                   />
-                  <div className="w-full flex-1 flex flex-col justify-between">
-                    <h3 className="font-semibold text-sm mb-1 truncate" title={product.productName}>
+                  <div style={{ width: "100%", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <h3 style={{ fontWeight: "bold", fontSize: "1rem", marginBottom: "0.25rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} title={product.productName}>
                       {product.productName}
                     </h3>
-                    <p className="text-gray-500 text-xs mb-1 line-clamp-2" style={{ minHeight: "32px" }}>
+                    <p style={{ color: "#666", fontSize: "0.9rem", marginBottom: "0.25rem", minHeight: "32px" }}>
                       {product.description}
                     </p>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-primary font-bold text-base">${product.price}</span>
-                      <span className="text-gray-400 text-xs">
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.25rem" }}>
+                      <span style={{ color: "var(--color-accent)", fontWeight: "bold" }}>${product.price}</span>
+                      <span style={{ color: "#aaa", fontSize: "0.85rem" }}>
                         {cart.find(item => item._id === product._id)?.qty || 0} in cart
                       </span>
                     </div>
-                    <div className="flex gap-1 mt-1">
-                      <button
-                        onClick={() => addToCart(product)}
-                        className="btn btn-primary btn-xs flex-1"
-                        style={{ fontSize: "0.8rem", padding: "0.25rem 0.5rem" }}
-                      >
+                    <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
+                      <Button onClick={() => addToCart(product)} style={{ flex: 1, fontSize: "0.9rem", padding: "0.25rem 0.5rem" }}>
                         Add
-                      </button>
+                      </Button>
                       {user?.token ? (
-                        <button
-                          onClick={() => buyNow(product)}
-                          className="btn btn-success btn-xs flex-1"
-                          style={{ fontSize: "0.8rem", padding: "0.25rem 0.5rem" }}
-                        >
+                        <Button onClick={() => buyNow(product)} style={{ flex: 1, fontSize: "0.9rem", padding: "0.25rem 0.5rem" }}>
                           Buy
-                        </button>
+                        </Button>
                       ) : (
-                        <button
-                          onClick={handleLoginToBuy}
-                          className="btn btn-secondary btn-xs flex-1"
-                          style={{ fontSize: "0.8rem", padding: "0.25rem 0.5rem" }}
-                        >
+                        <Button variant="secondary" onClick={handleLoginToBuy} style={{ flex: 1, fontSize: "0.9rem", padding: "0.25rem 0.5rem" }}>
                           Login
-                        </button>
+                        </Button>
                       )}
                     </div>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           )}
           {!isLoading && !error && products.length > 0 && (
-            <div className="text-center mt-6">
-              <button
-                onClick={() => navigate("/admin/products")}
-                className="btn btn-primary btn-sm"
-              >
-                View All Products
-              </button>
+            <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+              <Button onClick={() => navigate("/admin/products")}>View All Products</Button>
             </div>
           )}
         </div>
 
         {/* Features Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div className="text-center">
-            <div className="text-3xl mb-2">🚚</div>
-            <h3 className="text-base font-semibold mb-1">Free Shipping</h3>
-            <p className="text-gray-600 text-xs">Free shipping on all orders over $50</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl mb-2">🛡️</div>
-            <h3 className="text-base font-semibold mb-1">Secure Payment</h3>
-            <p className="text-gray-600 text-xs">100% secure payment processing</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl mb-2">↩️</div>
-            <h3 className="text-base font-semibold mb-1">Easy Returns</h3>
-            <p className="text-gray-600 text-xs">30-day return policy for all products</p>
-          </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.5rem", marginBottom: "2rem" }}>
+          <Card style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🚚</div>
+            <h3 style={{ fontSize: "1rem", fontWeight: "bold", marginBottom: "0.25rem" }}>Free Shipping</h3>
+            <p style={{ color: "#666", fontSize: "0.9rem" }}>Free shipping on all orders over $50</p>
+          </Card>
+          <Card style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🛡️</div>
+            <h3 style={{ fontSize: "1rem", fontWeight: "bold", marginBottom: "0.25rem" }}>Secure Payment</h3>
+            <p style={{ color: "#666", fontSize: "0.9rem" }}>100% secure payment processing</p>
+          </Card>
+          <Card style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>↩️</div>
+            <h3 style={{ fontSize: "1rem", fontWeight: "bold", marginBottom: "0.25rem" }}>Easy Returns</h3>
+            <p style={{ color: "#666", fontSize: "0.9rem" }}>30-day return policy for all products</p>
+          </Card>
         </div>
 
         {/* Call to Action */}
-        <div className="card bg-primary text-white text-center p-6 md:p-8">
-          <h2 className="text-2xl font-bold mb-2">Ready to Shop?</h2>
-          <p className="text-base mb-4 opacity-90">
+        <Card style={{ background: "var(--color-accent)", color: "#fff", textAlign: "center", padding: "2rem 1rem" }}>
+          <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "0.5rem" }}>Ready to Shop?</h2>
+          <p style={{ fontSize: "1rem", marginBottom: "1rem", opacity: 0.9 }}>
             Join thousands of satisfied customers who trust MERN Store for their shopping needs.
           </p>
-          <div className="flex justify-center gap-2">
+          <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
             {!user?.token ? (
               <>
-                <a href="/register" className="btn btn-secondary btn-sm md:btn-lg">
-                  Create Account
-                </a>
-                <a href="/login" className="btn btn-white btn-sm md:btn-lg">
-                  Sign In
-                </a>
+                <Button variant="secondary" onClick={() => navigate("/register")}>Create Account</Button>
+                <Button style={{ background: "#fff", color: "var(--color-accent)" }} onClick={() => navigate("/login")}>Sign In</Button>
               </>
             ) : (
-              <a href="/cart" className="btn btn-secondary btn-sm md:btn-lg">
-                View Cart ({cart.length} items)
-              </a>
+              <Button variant="secondary" onClick={() => navigate("/cart")}>View Cart ({cart.length} items)</Button>
             )}
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

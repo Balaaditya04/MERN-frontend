@@ -16,6 +16,7 @@ import Products from "./components/Products";
 import Home from "./components/Home";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
+import Navbar from "./components/ui/Navbar";
 
 export const AppContext = createContext();
 
@@ -39,7 +40,7 @@ function App() {
     <div className="App-Container">
       <AppContext.Provider value={{ cart, setCart, user, setUser }}>
         <BrowserRouter>
-          <Header />
+          <Navbar />
           <Routes>
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
