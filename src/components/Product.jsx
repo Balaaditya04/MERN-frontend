@@ -25,7 +25,7 @@ export default function Products() {
     try {
       setIsLoading(true);
       setError("Loading...");
-      const url = `${API_URL}/api/products/?page=${page}&limit=${limit}&search=${searchVal}`;
+      const url = `${API_URL}/api/products/all?page=${page}&limit=${limit}&search=${searchVal}`;
       const result = await axios.get(url);
       setProducts(result.data.products);
       setTotalPages(result.data.total);

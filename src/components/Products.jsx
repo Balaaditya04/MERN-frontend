@@ -28,7 +28,7 @@ export default function Products() {
   const fetchProducts = async () => {
     try {
       setError("Loading...");
-      const url = `${API_URL}/api/products/?page=${page}&limit=${limit}&search=${searchVal}`;
+      const url = `${API_URL}/api/products/all?page=${page}&limit=${limit}&search=${searchVal}`;
       const headers = user?.token ? { Authorization: `Bearer ${user.token}` } : {};
       const result = await axios.get(url, { headers });
       setProducts(result.data.products);
