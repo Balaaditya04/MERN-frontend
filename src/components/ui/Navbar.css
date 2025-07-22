@@ -31,7 +31,6 @@
   font-weight: 500;
   padding: 0.5em 0.75em;
   border-radius: 4px;
-  transition: background 0.15s;
 }
 
 .navbar-links li a:focus-visible,
@@ -65,7 +64,6 @@
   background: var(--color-text);
   position: absolute;
   left: 0;
-  transition: 0.2s;
 }
 
 .navbar-hamburger::before {

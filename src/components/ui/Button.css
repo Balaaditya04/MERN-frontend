@@ -7,7 +7,6 @@
   cursor: pointer;
   background: var(--color-accent);
   color: #fff;
-  transition: background 0.15s, box-shadow 0.15s;
   outline: none;
   margin: 0.25em 0;
 }
