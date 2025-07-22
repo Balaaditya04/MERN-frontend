@@ -43,6 +43,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route index element={<Home />} />
+            <Route path="products" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="profile" element={<Profile />} />
             <Route path="register" element={<Register />} />
