@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-gray-800 text-white mt-auto">
       <div className="container py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
+          {/* Company Info /*/}
           <div className="md:col-span-2">
             <h3 className="text-xl font-semibold mb-4">🛍️ </h3>
             <p className="text-gray-300 mb-4">
